@@ -182,6 +182,7 @@
 @media (max-width: 600px) {
   .main{
     overflow: hidden;
+    overflow-y: hidden;
   }
   .main-bottom input {
     flex: none;
@@ -199,7 +200,7 @@
 
   .main .cards {
     flex-direction: column;
-    margin-top: -15px;
+    margin-top: -25px;
     display: grid;
     grid-template-columns: 1fr 1fr; /* Stack cards vertically */
   }
