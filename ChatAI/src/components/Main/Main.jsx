@@ -48,19 +48,19 @@ const Main = () => {
               </p>
             </section>
             <div className="cards">
-              <div className="card">
+              <div className="card c">
                 <p>Innovation</p>
                 <img src={assets.compass_icon} alt="Compass Icon" />
               </div>
-              <div className="card">
+              <div className="card ">
                 <p>Story</p>
                 <img src={assets.edit} alt="Edit Icon" />
               </div>
-              <div className="card">
+              <div className="card c">
                 <p>Education</p>
                 <img src={assets.lightbulb} alt="Lightbulb Icon" />
               </div>
-              <div className="card">
+              <div className="card  ">
                 <p>Code</p>
                 <img src={assets.web} alt="Web Icon" />
               </div>
