@@ -21,6 +21,8 @@
   padding: 10px;
   font-weight: 500;
   color: #585858;
+  align-items: center;
+  text-align: center;
 }
 .main .nav img {
   width: 40px;
@@ -177,6 +179,9 @@
 
 /* Responsive Design */
 @media (max-width: 600px) {
+  .main{
+    overflow: hidden;
+  }
   .main-bottom input {
     flex: none;
     width: 150px;
@@ -192,6 +197,8 @@
   }
 
   .main .cards {
+    flex-direction: column;
+    margin-top: 0px;
     display: grid;
     grid-template-columns: 1fr 1fr; /* Stack cards vertically */
   }
