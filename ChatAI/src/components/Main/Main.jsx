@@ -43,7 +43,7 @@ const Main = () => {
                 <span>Hello, Dev</span>
               </p>
               <p>
-                Welcome to Chathelp<span className="dot">...</span>
+                Let Resolve it<span className="dot">...</span>
               </p>
             </section>
             <div className="cards">
@@ -108,8 +108,8 @@ const Main = () => {
               placeholder="Enter prompt"
             />
             <div className="icons">
-              <img src={assets.gallery_icon} alt="Gallery Icon" />
-              <img src={assets.mic_icon} alt="Mic Icon" />
+              {/* <img src={assets.gallery_icon} alt="Gallery Icon" />
+              <img src={assets.mic_icon} alt="Mic Icon" /> */}
               {input && (
                 <img
                   onClick={handleSend}

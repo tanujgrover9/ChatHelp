@@ -52,16 +52,18 @@
 /* Greeting Section */
 .main .greet {
   margin: 50px 10px;
-  font-size: 56px;
+  font-size: 60px;
   color: #c4c7c5;
-  font-weight: 500;
+  font-weight: bolder;
   padding: 20px;
   margin-top: 20px;
 }
 .main .greet span {
-  background: linear-gradient(16deg, #4b90ff, #f308b8);
+  background: linear-gradient(16deg, #4b90ff, #df08f3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: 1000;
+
 }
 
 /* Cards Section */
@@ -83,6 +85,7 @@
 .main .card p {
   font-size: 18px;
   font-weight: 500;
+  color: #868887;
 }
 
 /* Bottom Section */
