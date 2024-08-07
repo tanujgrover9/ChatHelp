@@ -121,11 +121,11 @@ const Main = () => {
             </div>
           </div>
           <div className="bottom-info">
-            <p>
+            {/* <p>
               By:{" "}
-              <span className="by">Anshuman Singh</span>
+            </p> */}
+            <p><span className="by">Note</span> If you stop the response in middle then add the next prompt twice by:<span className="by">Anshuman Singh</span>
             </p>
-            <p><span className="by">Note</span> If you stop the response in middle then add the next prompt twice</p>
     
             <p></p>
           </div>
