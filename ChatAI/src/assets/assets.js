@@ -14,9 +14,21 @@ import code_icon from './code_icon.png'
 import send_icon from './send_icon.png'
 import gemini_icon from './gemini_icon.png'
 import img1 from './img1.png'
+import stop from './stop-button.png'
+import bot from './bot.png'
+import orbital from './orbital.png'
+import add from './add.png'
+import hat from './hat.png'
+import lightbulb from './hat.png'
+import edit from './edit.png'
+import web from './web-programming.png'
 
 
 export const assets = {
+    hat,
+    lightbulb,
+    edit,
+    web,
     history_icon,
     menu_icon,
     plus_icon,
@@ -32,6 +44,10 @@ export const assets = {
     code_icon,
     send_icon,
     gemini_icon,
-    img1
+    img1,
+    stop,
+    bot,
+    orbital,
+    add
     
 }

@@ -1,8 +1,7 @@
-/* eslint-disable react/no-danger-with-children */
+import { useContext, useCallback } from "react";
 import "./main.css";
-import { assets } from "../../assets/assets";
-import { useContext } from "react";
 import { Context } from "../../context/context";
+import { assets } from "../../assets/assets";
 
 const Main = () => {
   const {
@@ -13,74 +12,93 @@ const Main = () => {
     resultData,
     setInput,
     input,
+    stopProcessing,
   } = useContext(Context);
+
+  const handleSend = useCallback(() => {
+    if (input.trim()) {
+      onSent(input);
+    }
+  }, [input, onSent]);
+
+  const handleStop = useCallback(() => {
+    stopProcessing();
+  }, [stopProcessing]);
 
   return (
     <div className="main">
-      <div className="nav">
-        <p>Chathelp<span className="dot">...</span></p>
-        <img src={assets.user_icon} alt="" />
-      </div>
-      <div className="main-container">
+      <img className="bg-img" src={assets.orbital}></img>
+      <header className="nav">
+        <p>
+          Chathelp<span className="dot">...</span>
+        </p>
+        <img src={assets.user_icon} alt="User Icon" />
+      </header>
+      <main className="main-container">
         {!showResult ? (
           <>
-            <div className="greet">
+            <section className="greet">
               <p>
                 <span>Hello, Dev</span>
               </p>
-              <p>Welcome to Chathelp<span className="dot">...</span></p>
-            </div>
+              <p>
+                Welcome to Chathelp<span className="dot">...</span>
+              </p>
+            </section>
             <div className="cards">
               <div className="card">
-                {/* <p>
-                  Suggest some beautiful places to see on an upcoming road trip
-                </p> */}
-                <img src={assets.img1}></img>
-                {/* <img src={assets.compass_icon} alt="" /> */}
-              </div>
-              {/* <div className="card">
-              <img src={assets.img2}></img>
+                 <p>
+                  Guide
+                </p>
+                <img src={assets.compass_icon} alt="" />
 
-                <p>Which would be the best site for tracking</p>
-                <img src={assets.bulb_icon} alt="" />
               </div>
               <div className="card">
-              <img src={assets.img3}></img>
+                 <p>
+                  Help
+                </p>
+                <img src={assets.edit} alt="" />
 
-                <p>Suggest some good food that should be spicy</p>
-                <img src={assets.message_icon} alt="" />
               </div>
               <div className="card">
-              <img src={assets.img4}></img>
+                 <p>
+                  Education
+                </p>
+                <img src={assets.lightbulb} alt="" />
 
-                <p>Summarize this concept: urban planning</p>
-                <img src={assets.code_icon} alt="" />
-              </div> */}
+              </div>
+              <div className="card">
+                 <p>
+                 Code
+                </p>
+                <img src={assets.web} alt="" />
+
+              </div>
             </div>
+
           </>
         ) : (
-          <div className="result">
-            {/* Display result data here */}
+          <section className="result">
             <div className="result-title">
-              <img src={assets.user_icon} alt=""></img>
+              <img src={assets.user_icon} alt="User Icon" />
               <p>{recentPrompt}</p>
             </div>
             <div className="result-data">
-              <img src={assets.gemini_icon}></img>
+              <img src={assets.gemini_icon} alt="Gemini Icon" />
               {loading ? (
                 <div className="loader">
-                    <hr />
-                    <hr />
-                    <hr />
+                  <hr />
+                  <hr />
+                  <hr />
                 </div>
               ) : (
-                <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
+                <p dangerouslySetInnerHTML={{ __html: resultData }} />
               )}
             </div>
-          </div>
+          </section>
         )}
 
-        <div className="main-bottom">
+        <footer className="main-bottom">
           <div className="search-box">
             <input
               onChange={(e) => setInput(e.target.value)}
@@ -88,23 +106,27 @@ const Main = () => {
               type="text"
               placeholder="Enter prompt here"
             />
-            <div>
-              <img src={assets.gallery_icon} alt="" />
-              <img src={assets.mic_icon} alt="" />
-             {input ? <img
-                onClick={() => onSent(input)}
-                src={assets.send_icon}
-                alt=""
-              />:null}
+            <div className="icons">
+              <img src={assets.gallery_icon} alt="Gallery Icon" />
+              <img src={assets.mic_icon} alt="Mic Icon" />
+              {input && (
+                <img
+                  onClick={handleSend}
+                  src={assets.send_icon}
+                  alt="Send Icon"
+                />
+              )}
+              <img onClick={handleStop} src={assets.stop} alt="Stop Icon" />
             </div>
           </div>
           <div className="bottom-info">
             <p>
-              ChatHelp may display inaccurate info, so double-check its result
+              ChatHelp may display inaccurate info By:{" "}
+              <span>Anshuman Singh</span>
             </p>
           </div>
-        </div>
-      </div>
+        </footer>
+      </main>
     </div>
   );
 };

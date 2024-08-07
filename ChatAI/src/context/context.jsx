@@ -1,63 +1,85 @@
-import { createContext, useState } from "react";
+/* eslint-disable react/prop-types */
+import  { createContext, useState, useRef, useCallback } from "react";
 import run from "../config/gemini";
 
 export const Context = createContext();
 
-const ContextProvider = (props) => {
+const ContextProvider = ({ children }) => {
   const [input, setInput] = useState("");
   const [recentPrompt, setRecentPrompt] = useState("");
-  const [prevPrompts, setPrevPrompts] = useState([]); // Initialize as an empty array
+  const [prevPrompts, setPrevPrompts] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState("");
+  const [shouldContinue, setShouldContinue] = useState(true);
+  const [error, setError] = useState(null);
+  const timeoutRefs = useRef([]);
 
-  const delayPara = (index, nextWord) => {
-    setTimeout(() => {
-      setResultData((prev) => prev + nextWord);
-    }, 75 * index);
+  const clearTimeouts = () => {
+    timeoutRefs.current.forEach(clearTimeout);
+    timeoutRefs.current = [];
   };
-  const newChat=()=>{
-    setLoading(false)
-    setShowResult(false)
-  }
+
+  const delayPara = useCallback((index, nextWord) => {
+    if (!shouldContinue) return;
+
+    const timeoutId = setTimeout(() => {
+      if (shouldContinue) {
+        setResultData((prev) => prev + nextWord);
+      }
+    }, 75 * index);
+    timeoutRefs.current.push(timeoutId);
+  }, [shouldContinue]);
+
+  const newChat = () => {
+    clearTimeouts();
+    setLoading(false);
+    setShowResult(false);
+    setShouldContinue(true);
+    setResultData("");
+    setError(null);
+  };
 
   const onSent = async (prompt) => {
-    if (!prompt || prompt.trim() === "") return; // Exit if prompt is empty
+    if (!prompt.trim()) return;
 
-    setResultData("");
+    stopProcessing();
+    newChat();
+
+    setInput("");
     setLoading(true);
     setShowResult(true);
 
-    // Avoid adding the same prompt to prevPrompts
     if (!prevPrompts.includes(prompt)) {
       setPrevPrompts((prev) => [...prev, prompt]);
     }
-    
+
     setRecentPrompt(prompt);
-    let response = await run(prompt);
 
-    // Remove leading ##
-    response = response.replace(/^##\s*/, '');
+    try {
+      let response = await run(prompt);
+      response = response.replace(/^##\s*/, '');
+      const formattedResponse = response
+        .split("**")
+        .map((part, index) => (index % 2 === 1 ? `<b>${part}</b>` : part))
+        .join("")
+        .replace(/\*/g, "</br>");
 
-    // Process the response
-    let responseArray = response.split("**");
-    let newResponse = "";
-    for (let i = 0; i < responseArray.length; i++) {
-      if (i === 0 || i % 2 !== 1) {
-        newResponse += responseArray[i];
-      } else {
-        newResponse += "<b>" + responseArray[i] + "</b>";
-      }
+      const responseArray = formattedResponse.split(" ");
+      responseArray.forEach((nextWord, index) => delayPara(index, nextWord + " "));
+
+    } catch (err) {
+      console.error("Error processing prompt:", err);
+      setError("An error occurred while processing your request. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    let newResponse2 = newResponse.split("*").join("</br>");
-    let newResponseArray = newResponse2.split(" ");
-    for (let i = 0; i < newResponseArray.length; i++) {
-      const nextWord = newResponseArray[i];
-      delayPara(i, nextWord + " ");
-    }
-    
+  };
+
+  const stopProcessing = () => {
+    setShouldContinue(false);
     setLoading(false);
-    setInput("");
+    clearTimeouts();
   };
 
   const contextValue = {
@@ -71,12 +93,16 @@ const ContextProvider = (props) => {
     resultData,
     input,
     setInput,
-    newChat
+    newChat,
+    stopProcessing,
+    error,
   };
 
   return (
-    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+    <Context.Provider value={contextValue}>
+      {children}
+    </Context.Provider>
   );
-}
+};
 
 export default ContextProvider;

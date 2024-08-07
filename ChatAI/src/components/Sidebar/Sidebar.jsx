@@ -4,13 +4,12 @@ import { assets } from "../../assets/assets";
 import { Context } from "../../context/context";
 const Sidebar = () => {
   const [extend, setExtend] = useState(true);
-  const { onSent, prevPrompts, setRecentPrompt ,newChat} = useContext(Context);
-  
-  const loadPrompt =async (prompt)=>{
-    setRecentPrompt(prompt)
-    await onSent(prompt)
+  const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context);
 
-  }
+  const loadPrompt = async (prompt) => {
+    setRecentPrompt(prompt);
+    await onSent(prompt);
+  };
 
   return (
     <div className="sidebar">
@@ -23,24 +22,26 @@ const Sidebar = () => {
           alt=""
         ></img>
         <br />
-        <div onClick={()=>newChat()} className="new-chat">
-          <img src={assets.plus_icon} alt="" />
+        <div onClick={() => newChat()} className="new-chat">
+          <img src={assets.add} alt="" />
           {extend ? <p>New Chat</p> : null}
         </div>
         {extend ? (
           <div className="recent">
+            
             <p className="recent-title">Recent</p>
-            {prevPrompts.map((item,index)=>{
-              return(
-                <div onClick={()=>loadPrompt(item)} className="recent-entry" key={index}>
-                <img src={assets.message_icon}></img>
-                <p>{item.slice(0,18)}...</p>
-              </div>
-
-              )
-
+            {prevPrompts.map((item, index) => {
+              return (
+                <div
+                  onClick={() => loadPrompt(item)}
+                  className="recent-entry"
+                  key={index}
+                >
+                  <img src={assets.message_icon}></img>
+                  <p>{item.slice(0, 18)}...</p>
+                </div>
+              );
             })}
-           
           </div>
         ) : null}
       </div>
