@@ -13,7 +13,8 @@ const Main = () => {
     setInput,
     input,
     stopProcessing,
-    newChat
+    newChat,
+    error,
   } = useContext(Context);
 
   const handleSend = useCallback(() => {
@@ -28,9 +29,9 @@ const Main = () => {
 
   return (
     <div className="main">
-      <img className="bg-img" src={assets.orbital}></img>
+      <img className="bg-img" src={assets.orbital} alt="Background" />
       <header className="nav">
-        <p className="home" onClick={() => newChat()}>
+        <p className="home" onClick={newChat}>
           Chathelp<span className="dot">...</span>
         </p>
         <img src={assets.user_icon} alt="User Icon" />
@@ -43,40 +44,27 @@ const Main = () => {
                 <span>Hello, Dev</span>
               </p>
               <p>
-                Let Resolve it<span className="dot">...</span>
+                Let’s Resolve it<span className="dot">...</span>
               </p>
             </section>
             <div className="cards">
-              <div className="card c">
-                 <p>
-                  Guide
-                </p>
-                <img src={assets.compass_icon} alt="" />
-
-              </div>
-              <div className="card c">
-                 <p>
-                  Help
-                </p>
-                <img src={assets.edit} alt="" />
-
+              <div className="card">
+                <p>Innovation</p>
+                <img src={assets.compass_icon} alt="Compass Icon" />
               </div>
               <div className="card">
-                 <p>
-                  Education
-                </p>
-                <img src={assets.lightbulb} alt="" />
-
+                <p>Story</p>
+                <img src={assets.edit} alt="Edit Icon" />
               </div>
               <div className="card">
-                 <p>
-                 Code
-                </p>
-                <img src={assets.web} alt="" />
-
+                <p>Education</p>
+                <img src={assets.lightbulb} alt="Lightbulb Icon" />
+              </div>
+              <div className="card">
+                <p>Code</p>
+                <img src={assets.web} alt="Web Icon" />
               </div>
             </div>
-
           </>
         ) : (
           <section className="result">
@@ -92,13 +80,14 @@ const Main = () => {
                   <hr />
                   <hr />
                 </div>
+              ) : error ? (
+                <p className="error-message">{error}</p>
               ) : (
-                <p dangerouslySetInnerHTML={{ __html: resultData }} />
+                <div dangerouslySetInnerHTML={{ __html: resultData }} />
               )}
             </div>
           </section>
         )}
-
         <footer className="main-bottom">
           <div className="search-box">
             <input
@@ -106,28 +95,31 @@ const Main = () => {
               value={input}
               type="text"
               placeholder="Enter prompt"
+              aria-label="Enter prompt"
             />
             <div className="icons">
-              {/* <img src={assets.gallery_icon} alt="Gallery Icon" />
-              <img src={assets.mic_icon} alt="Mic Icon" /> */}
               {input && (
                 <img
                   onClick={handleSend}
                   src={assets.send_icon}
                   alt="Send Icon"
+                  aria-label="Send"
                 />
               )}
-              <img onClick={handleStop} src={assets.stop} alt="Stop Icon" />
+              <img
+                onClick={handleStop}
+                src={assets.stop}
+                alt="Stop Icon"
+                aria-label="Stop"
+              />
             </div>
           </div>
           <div className="bottom-info">
-            {/* <p>
-              By:{" "}
-            </p> */}
-            <p><span className="by">Note</span> If you stop the response in middle then add the next prompt twice by:<span className="by">Anshuman Singh</span>
+            <p>
+              <span className="by">Note</span> If you stop the response in the
+              middle, then add the next prompt twice by:
+              <span className="by">Anshuman Singh</span>
             </p>
-    
-            <p></p>
           </div>
         </footer>
       </main>

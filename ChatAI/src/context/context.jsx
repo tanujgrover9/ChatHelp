@@ -20,16 +20,19 @@ const ContextProvider = ({ children }) => {
     timeoutRefs.current = [];
   };
 
-  const delayPara = useCallback((index, nextWord) => {
-    if (!shouldContinue) return;
+  const delayPara = useCallback(
+    (index, nextWord) => {
+      if (!shouldContinue) return;
 
-    const timeoutId = setTimeout(() => {
-      if (shouldContinue) {
-        setResultData((prev) => prev + nextWord);
-      }
-    }, 75 * index);
-    timeoutRefs.current.push(timeoutId);
-  }, [shouldContinue]);
+      const timeoutId = setTimeout(() => {
+        if (shouldContinue) {
+          setResultData((prev) => prev + nextWord);
+        }
+      }, 75 * index);
+      timeoutRefs.current.push(timeoutId);
+    },
+    [shouldContinue]
+  );
 
   const newChat = () => {
     clearTimeouts();
@@ -58,19 +61,31 @@ const ContextProvider = ({ children }) => {
 
     try {
       let response = await run(prompt);
-      response = response.replace(/^##\s*/, '');
-      const formattedResponse = response
+      response = response.replace(/^##\s*/, "");
+
+      // Format the response
+      let formattedResponse = response
         .split("**")
         .map((part, index) => (index % 2 === 1 ? `<b>${part}</b>` : part))
         .join("")
-        .replace(/\*/g, "</br>");
+        .replace(/\*/g, "<br/>")
+        .replace(/```[^\n]*\n([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+        .replace(/\*(.*?)\*/g, '<i>$1</i>')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        .replace(/\n+/g, '<br/>');
 
       const responseArray = formattedResponse.split(" ");
-      responseArray.forEach((nextWord, index) => delayPara(index, nextWord + " "));
-
+      responseArray.forEach((nextWord, index) =>
+        delayPara(index, nextWord + " ")
+      );
     } catch (err) {
       console.error("Error processing prompt:", err);
-      setError("An error occurred while processing your request. Please try again.");
+      setError(
+        err.message.includes("RECITATION")
+          ? "The response was blocked due to policy reasons. Please try rephrasing your prompt."
+          : "An error occurred while processing your request. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -98,11 +113,7 @@ const ContextProvider = ({ children }) => {
     error,
   };
 
-  return (
-    <Context.Provider value={contextValue}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
 export default ContextProvider;
