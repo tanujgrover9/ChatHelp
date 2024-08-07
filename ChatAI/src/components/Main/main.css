@@ -229,7 +229,7 @@
 
   .main .cards {
     flex-direction: column;
-    margin-top: -20px;
+    margin-top: -33px;
     display: grid;
     grid-template-columns: 1fr 1fr; /* Stack cards vertically */
   }
