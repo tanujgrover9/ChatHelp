@@ -13,6 +13,7 @@ const Main = () => {
     setInput,
     input,
     stopProcessing,
+    newChat
   } = useContext(Context);
 
   const handleSend = useCallback(() => {
@@ -29,7 +30,7 @@ const Main = () => {
     <div className="main">
       <img className="bg-img" src={assets.orbital}></img>
       <header className="nav">
-        <p>
+        <p className="home" onClick={() => newChat()}>
           Chathelp<span className="dot">...</span>
         </p>
         <img src={assets.user_icon} alt="User Icon" />
@@ -46,14 +47,14 @@ const Main = () => {
               </p>
             </section>
             <div className="cards">
-              <div className="card">
+              <div className="card c">
                  <p>
                   Guide
                 </p>
                 <img src={assets.compass_icon} alt="" />
 
               </div>
-              <div className="card">
+              <div className="card c">
                  <p>
                   Help
                 </p>
