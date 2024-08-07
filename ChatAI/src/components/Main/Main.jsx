@@ -105,7 +105,7 @@ const Main = () => {
               onChange={(e) => setInput(e.target.value)}
               value={input}
               type="text"
-              placeholder="Enter prompt here"
+              placeholder="Enter prompt"
             />
             <div className="icons">
               <img src={assets.gallery_icon} alt="Gallery Icon" />
@@ -125,8 +125,7 @@ const Main = () => {
               By:{" "}
               <span className="by">Anshuman Singh</span>
             </p>
-            <p className="mobile">Click on the ChatHelp... for home page.</p>
-            <p>If you stop the response in middle then add the next prompt twice</p>
+            <p><span className="by">Note</span> If you stop the response in middle then add the next prompt twice</p>
     
             <p></p>
           </div>
