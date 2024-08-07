@@ -122,9 +122,13 @@ const Main = () => {
           </div>
           <div className="bottom-info">
             <p>
-              ChatHelp may display inaccurate info By:{" "}
-              <span>Anshuman Singh</span>
+              By:{" "}
+              <span className="by">Anshuman Singh</span>
             </p>
+            <p className="mobile">Click on the ChatHelp... for home page.</p>
+            <p>If you stop the response in middle then add the next prompt twice</p>
+    
+            <p></p>
           </div>
         </footer>
       </main>

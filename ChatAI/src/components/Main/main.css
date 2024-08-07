@@ -94,6 +94,9 @@
   padding: 0 20px;
   margin: auto;
 }
+.main .bottom-info .mobile{
+  display: none;
+}
 .search-box {
   border: 1px solid rgb(126, 126, 234);
   display: flex;
@@ -126,6 +129,9 @@
   margin: 15px auto;
   text-align: center;
   font-weight: 300;
+}
+.bottom-info .by{
+  color: #4b90ff;
 }
 
 /* Result Section */
@@ -221,5 +227,8 @@
   }
   .main .cards .c{
     display: none;
+  }
+  .main .bottom-info .mobile{
+    display: inline;
   }
 }
