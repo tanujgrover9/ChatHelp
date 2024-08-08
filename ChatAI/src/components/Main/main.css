@@ -148,6 +148,7 @@
   padding: 0 5%;
   max-height: 70vh;
   overflow-y: scroll;
+  word-wrap: break-word; 
   margin-top: -20px;
 }
 .result::-webkit-scrollbar {
@@ -165,19 +166,20 @@
 }
 .result-data {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   gap: 20px;
-  /* border: 1px solid rgb(139, 139, 139); */
   border-radius: 20px;
-  padding: 20px 0px;
+  padding: 20px 0;
   padding-right: 20px;
   background-color: #a2bde823;
-
+  word-wrap: break-word; /* Ensure long words break and wrap */
 }
 .result-data p {
   font-size: 17px;
   font-weight: 300;
   line-height: 2.8;
+  overflow-wrap: break-word; /* Ensure long words break and wrap */
+  margin: 0; /* Remove default margin to prevent extra space */
 }
 
 
@@ -229,7 +231,7 @@
 
   .main .cards {
     flex-direction: column;
-    margin-top: -55px;
+    margin-top: -65px;
     display: grid;
     grid-template-columns: 1fr 1fr; 
   }
@@ -247,5 +249,8 @@
   }
   .main .bottom-info .mobile{
     display: inline;
+  }
+  .result-data {
+    overflow-x: auto; /* Ensure horizontal scrolling on small screens */
   }
 } 
