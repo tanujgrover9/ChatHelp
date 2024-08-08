@@ -229,17 +229,17 @@
 
   .main .cards {
     flex-direction: column;
-    margin-top: -33px;
+    margin-top: -40px;
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Stack cards vertically */
+    grid-template-columns: 1fr 1fr; 
   }
   .main .card img {
-    height: 40px; /* Reduce image size */
-    margin-bottom: 20px; /* Adjust spacing */
+    height: 50px; 
+    margin-bottom: 20px; 
   
   }
   .main .card p {
-    font-size: 16px; /* Adjust text size */
+    font-size: 16px; 
     
   }
   .main .cards .c{
