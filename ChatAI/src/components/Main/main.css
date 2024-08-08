@@ -229,7 +229,7 @@
 
   .main .cards {
     flex-direction: column;
-    margin-top: -40px;
+    margin-top: -55px;
     display: grid;
     grid-template-columns: 1fr 1fr; 
   }
